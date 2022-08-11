@@ -8,6 +8,7 @@ ToolBar {
             ToolButton { action: actions.showSearchAction}
             ToolButton { action: actions.showFilterPanel}
             ToolButton { action: actions.showCompleted}
+            ToolButton { action: actions.showFuture}
             ToolBarSeparator { }
             ToolButton { action: actions.fileSave }
             ToolBarSeparator { }
