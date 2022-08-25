@@ -64,6 +64,7 @@ MenuBar {
         MenuItem { action: actions.sortByProjects}
         MenuItem { action: actions.sortByContexts}
         MenuItem { action: actions.sortByDueDate}
+        MenuItem { action: actions.sortByAlphabet}
     }
     Menu {
         title: qsTr("Help")

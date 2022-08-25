@@ -51,6 +51,13 @@ class TaskSorter(object):
         return sorted(tasks, key=tmp, reverse=False)
 
     @staticmethod
+    def alphabet(tasks):
+        def tmp(task):
+            desc = task.description
+            return desc, task
+        return sorted(tasks, key=tmp, reverse=False)
+
+    @staticmethod
     def default(tasks):
         return sorted(tasks, reverse=False)
 

@@ -303,6 +303,17 @@ Item {
         }
     }
 
+    property Action sortByAlphabet: Action{
+        iconName: "view-sort-ascending-symbolic"
+        text: "Alphabetically"
+        enabled: !taskListView.editing
+        onTriggered: {
+            taskListView.storeSelection()
+            mainController.sortingMode = "alphabet"
+            taskListView.restoreSelection()
+        }
+    }
+
     FileDialog {
         id: fileDialog
         nameFilters: ["Text files (*.txt)"]
