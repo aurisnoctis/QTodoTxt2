@@ -226,7 +226,7 @@ class Task(QtCore.QObject):
         if word[4] == '+':
             # check correct format for strict recurrence (with the leading '+')
             # allow 1 or more digits for increment
-            if re.match('^[1-9]+[bdwmy]', word[5:]):
+            if re.match('^\d+[bdwmy]', word[5:]):
                 # send all digits as increment and last char as interval
                 self.recursion = Recursion(RecursiveMode.originalDueDate, word[5:-1], word[-1])
             else:
@@ -234,7 +234,7 @@ class Task(QtCore.QObject):
         # Completion mode
         else:
             # same as above for "normal recurrence" (without leading '+')
-            if re.match('^[1-9]+[bdwmy]', word[4:]):
+            if re.match('^\d+[bdwmy]', word[4:]):
                 self.recursion = Recursion(RecursiveMode.completionDate, word[4:-1], word[-1])
             else:
                 print("Error parsing recurrence '{}'".format(word))
@@ -411,14 +411,21 @@ def recurTask(task):
     # Set new due date in old task text
     new = Task(task.text)
     if task.recursion.mode == RecursiveMode.originalDueDate:
-        new.due += delta
+        if new.due:
+            new.due += delta
         if new.threshold:
             new.threshold += delta
     else:
-        new.due = date.today() + delta
+        if new.due:
+            new.due = date.today() + delta
         if new.threshold:
-            delta2 = task.due - task.threshold
-            new.threshold += delta2
+            if new.due:
+                # keep time diff between due and threshold
+                delta2 = task.due - task.threshold
+                new.threshold = new.due - delta2
+            else:
+                # apply delta to theshold if no due
+                new.threshold = date.today() + delta
     return new
 
 

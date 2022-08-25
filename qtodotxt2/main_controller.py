@@ -323,7 +323,7 @@ class MainController(QtCore.QObject):
                 # if task is not a task assume it is an int
                 task = self._filteredTasks[int(task)]
             if not task.is_complete:
-                if task.recursion is not None and task.due is not None:
+                if task.recursion is not None and (task.due is not None or task.threshold is not None):
                     new_task = tasklib.recurTask(task)
                     self._file.addTask(new_task)
                 task.setCompleted()
